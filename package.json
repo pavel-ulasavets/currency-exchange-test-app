@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "clean": "rm -rf ./dist/*",
-    "test": "jest ./test",
+    "test": "npx jest --no-cache \".*spec\\.js\"",
     "build": "webpack",
     "start": "npm run clean && webpack-dev-server",
     "lint": "npx eslint ."
@@ -16,6 +16,15 @@
       "pre-push": "npm run test"
     }
   },
+  "jest": {
+    "verbose": true,
+    "transform": {
+      "^.+.js?$": "babel-jest"
+    },
+    "setupFilesAfterEnv": [
+      "<rootDir>/configs/testing/setup.js"
+    ]
+  },
   "keywords": [
     "currency",
     "exchange"
@@ -23,6 +32,7 @@
   "author": "Pavel Ulasavets",
   "license": "ISC",
   "dependencies": {
+    "core-js": "^3.3.2",
     "create-react-app": "^3.2.0",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
@@ -33,11 +43,16 @@
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
     "eslint": "^6.5.1",
     "eslint-plugin-react": "^7.16.0",
     "html-webpack-plugin": "^3.2.0",
