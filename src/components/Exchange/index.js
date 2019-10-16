@@ -4,17 +4,25 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 // local
+// selectors
 import {
   getActiveUserName,
   getPocketsCurrencies
 } from 'store/user/selectors';
 
+// components
+import Pocket from './components/Pocket';
+
+
 export function Exchange(props) {
   return (
-    <div>
-      <div>User name: {props.userName}</div>
-      <div>Currencies: {props.currencies.join(',')}</div>
-    </div>
+    <Pocket
+      currencies={props.currencies}
+      pocketBalance={500}
+      pocketCurrency={'PLN'}
+      amountForConversion={-1000}
+      onCurrencyChanged={newValue => console.log(newValue)}
+    />
   );
 }
 

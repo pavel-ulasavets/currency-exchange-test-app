@@ -17,7 +17,7 @@ export default (
           /> :
           <Home />
       }
-    </Route>,
+    </Route>
     <Route path="/exchange">
       <Exchange />
     </Route>

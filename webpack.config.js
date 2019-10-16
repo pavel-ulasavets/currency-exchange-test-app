@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: './src/index.js',
-
+  devtool: 'cheap-module-eval-source-map',
   output: {
     filename: '[name].[chunkhash].js',
     path: path.resolve(__dirname, 'dist')
@@ -14,13 +14,15 @@ module.exports = {
 
   plugins: [
     new webpack.ProgressPlugin(),
+    new webpack.SourceMapDevToolPlugin(),
     new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'src/index.html')})
   ],
 
   resolve: {
     alias: {
       components: path.resolve(__dirname, 'src/components'),
-      store: path.resolve(__dirname, 'src/store')
+      store: path.resolve(__dirname, 'src/store'),
+      utils: path.resolve(__dirname, 'src/utils')
     }
   },
 
