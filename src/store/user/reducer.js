@@ -3,15 +3,15 @@ const initialState = {
   pockets: [
     {
       currency: 'PLN',
-      balance: 666
+      balance: 20
     },
     {
       currency: 'EUR',
-      balance: 666
+      balance: 40
     },
     {
       currency: 'USD',
-      balance: 666
+      balance: 60
     }
   ]
 };

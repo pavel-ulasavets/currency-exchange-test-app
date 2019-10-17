@@ -7,6 +7,7 @@ import {
   Input,
   FormControl,
   FormHelperText,
+  FormGroup
 } from '@material-ui/core';
 
 import './pocket.css';
@@ -19,31 +20,32 @@ export default function Pocket(props) {
 
   return (
     <div className={`pocket-wrapper ${props.classNames}`}>
-        <FormControl margin="normal" className="currencies-wrapper" >
-          <Select
-            onChange={(e => props.onCurrencyChanged(e.target.value))}
-            value={props.pocketCurrency}
-            inputProps={{ name: "currencies" }}
-            disableUnderline
-          >
-            {
-              props.currencies.map(currency => (
-                <MenuItem key={currency} value={currency}>
-                  {currency}
-                </MenuItem>
-              ))
-            }
-          </Select>
-          <FormHelperText name="pocket-balance" error={lackOfFunds}>
-            Balance: {props.pocketBalance} {getSymbolForCurrency(props.pocketCurrency)}
-          </FormHelperText>
-        </FormControl>
+      <FormControl margin="normal" className="currencies-wrapper" >
+        <Select
+          onChange={(e => props.onCurrencyChanged(e.target.value))}
+          value={props.pocketCurrency}
+          inputProps={{ name: "currencies" }}
+          disableUnderline
+        >
+          {
+            props.currencies.map(currency => (
+              <MenuItem key={currency} value={currency}>
+                {currency}
+              </MenuItem>
+            ))
+          }
+        </Select>
+        <FormHelperText name="pocket-balance" error={lackOfFunds}>
+          Balance: {props.pocketBalance} {getSymbolForCurrency(props.pocketCurrency)}
+        </FormHelperText>
+      </FormControl>
+      <FormGroup row>
         <FormControl margin="normal" className="amount-for-conversion-wrapper">
           <Input
             name="amount-for-conversion"
             type="number"
             disableUnderline
-            value={props.amountForConversion}
+            value={Math.abs(props.amountForConversion)}
             onChange={(e) => props.onAmountForConversionChanged(e.target.value)}
           />
           <FormHelperText name="conversion-message">
@@ -51,7 +53,8 @@ export default function Pocket(props) {
               lackOfFunds ? 'Exceeds balance' : ''
             }
           </FormHelperText>
-        </FormControl>
+      </FormControl>
+      </FormGroup>
     </div>
   );
 }

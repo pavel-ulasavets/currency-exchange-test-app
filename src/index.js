@@ -4,10 +4,11 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { createStore } from 'redux';
+
 // routes
 import Routes from './routes';
-import rootReducer from './store/reducer';
+// store
+import { store } from './store';
 
 function init() {
   const root = document.querySelector('.application-content');
@@ -24,7 +25,7 @@ function init() {
   });
 
   ReactDOM.render(
-    <Provider store={createStore(rootReducer)}>
+    <Provider store={store}>
       <ThemeProvider theme={theme}>
         <Router>
           {Routes}
