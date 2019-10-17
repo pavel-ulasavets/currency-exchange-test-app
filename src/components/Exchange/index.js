@@ -3,6 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import "./exchange.css";
+
 // local
 // selectors
 import {
@@ -13,16 +15,25 @@ import {
 // components
 import Pocket from './components/Pocket';
 
-
 export function Exchange(props) {
   return (
-    <Pocket
-      currencies={props.currencies}
-      pocketBalance={500}
-      pocketCurrency={'PLN'}
-      amountForConversion={-1000}
-      onCurrencyChanged={newValue => console.log(newValue)}
-    />
+    <div className="exchange-container">
+       <Pocket
+        currencies={props.currencies}
+        pocketBalance={500}
+        pocketCurrency={'PLN'}
+        amountForConversion={-1000}
+        onCurrencyChanged={newValue => console.log(newValue)}
+      />
+      <Pocket
+        classNames='target-pocket'
+        currencies={props.currencies}
+        pocketBalance={500}
+        pocketCurrency={'USD'}
+        amountForConversion={1000 / 4}
+        onCurrencyChanged={newValue => console.log(newValue)}
+      />
+    </div>
   );
 }
 

@@ -1,0 +1,7 @@
+.pocket-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 1.55em;
+  min-width: 25.5em;
+}
