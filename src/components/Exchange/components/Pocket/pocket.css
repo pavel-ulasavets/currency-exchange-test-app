@@ -5,3 +5,11 @@
   padding: 1.55em;
   min-width: 25.5em;
 }
+
+.amount-for-conversion-wrapper .MuiFormHelperText-root {
+  text-align: right;
+}
+
+.amount-for-conversion-wrapper .MuiInputBase-input {
+  text-align: right;
+}

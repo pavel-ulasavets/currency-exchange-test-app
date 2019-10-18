@@ -46,9 +46,9 @@ export default function Pocket(props) {
             type="number"
             disableUnderline
             value={Math.abs(props.amountForConversion)}
-            onChange={(e) => props.onAmountForConversionChanged(e.target.value)}
+            onChange={(e) => props.onAmountForConversionChanged(++e.target.value)}
           />
-          <FormHelperText name="conversion-message">
+          <FormHelperText name="conversion-message" classes={{ label: "conversion-message"}}>
             {
               lackOfFunds ? 'Exceeds balance' : ''
             }

@@ -1,23 +1,58 @@
+import { ActionTypes } from "./constants";
+
 const initialState = {
-  username: 'Pavel Ulasavets',
+  username: "Pavel Ulasavets",
   pockets: [
     {
-      currency: 'PLN',
+      currency: "PLN",
       balance: 20
     },
     {
-      currency: 'EUR',
+      currency: "EUR",
       balance: 40
     },
     {
-      currency: 'USD',
+      currency: "USD",
       balance: 60
     }
   ]
 };
 
-function userReducer(state = initialState, action) { // eslint-disable-line
-  return state;
+function userReducer(state = initialState, { type, payload }) {
+  switch (type) {
+    case ActionTypes.PUT_MONEY:
+      return {
+        ...state,
+        pockets: state.pockets.map(pkt => {
+          if (pkt.currency !== payload.currency) {
+            return pkt;
+          }
+
+          return {
+            ...pkt,
+            balance: pkt.balance + payload.amount
+          }
+        })
+      };
+
+    case ActionTypes.WITHDRAW_MONEY:
+      return {
+        ...state,
+        pockets: state.pockets.map(pkt => {
+          if (pkt.currency !== payload.currency) {
+            return pkt;
+          }
+
+          return {
+            ...pkt,
+            balance: pkt.balance - payload.amount
+          }
+        })
+      };
+
+    default:
+      return state;
+  }
 }
 
 export default userReducer;
