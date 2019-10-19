@@ -8,7 +8,7 @@ import { fetchActiveUserInfo } from 'store/user/actions';
 import { isActiveUserInitialized } from 'store/user/selectors';
 
 export function UserProvider(props) {
-  useEffect(() => props.fetchActiveUserInfo(props.userId), [props.userId]);
+  useEffect(() => { props.fetchActiveUserInfo(props.userId) }, [props.userId]);
 
   return (
     <React.Fragment>

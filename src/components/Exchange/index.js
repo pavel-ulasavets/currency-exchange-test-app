@@ -8,6 +8,7 @@ import { Button, IconButton } from '@material-ui/core';
 import "./exchange.css";
 
 // local
+
 // selectors
 import {
   getActiveUserName,
@@ -20,6 +21,7 @@ import {
   getExchangeRate,
   getExchangeRatesPollerId
 } from 'store/exchange/selectors';
+
 // actions
 import {
   setSourceCurrency,
@@ -29,13 +31,13 @@ import {
   startPollingExchangeRates,
   stopPollingExchangeRates
 } from 'store/exchange/actions';
-
 import {
   makeTransfer
 } from 'store/user/actions';
 
 // components
 import Pocket from './components/Pocket';
+import { floorToPositionAfterDot } from 'utils';
 
 export function Exchange(props) {
   const lackOfFunds = props.fromPocket.balance < props.requestAmount;
@@ -130,7 +132,7 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({
   userName: getActiveUserName(state),
   currencies: getPocketsCurrencies(state),
-  exchangeRate: getExchangeRate(state),
+  exchangeRate: floorToPositionAfterDot(getExchangeRate(state), 4),
   pollerId: getExchangeRatesPollerId(state),
   ...getPocketsEngagedInExchange(state),
   targetAmount: getTargetAmount(state),

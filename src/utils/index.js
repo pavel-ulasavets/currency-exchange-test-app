@@ -29,3 +29,21 @@ export function getSymbolForCurrency(currency) {
       return '';
   }
 }
+
+/**
+ * formats a provided number cutting all numbers after .XX
+ *
+ * @param {Number} amount
+ */
+export function floorToPositionAfterDot(amount, position = 2) {
+  if (position < 0) {
+    return amount;
+  }
+
+  if (typeof amount !== 'number') {
+    return amount;
+  }
+
+  const multiplier = Math.pow(10, position);
+  return Math.floor(amount * multiplier) / multiplier;
+}

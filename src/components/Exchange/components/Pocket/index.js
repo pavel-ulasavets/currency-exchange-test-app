@@ -13,7 +13,7 @@ import {
 import './pocket.css';
 
 // local
-import { getSymbolForCurrency } from 'utils';
+import { getSymbolForCurrency, floorToPositionAfterDot } from 'utils';
 
 export default function Pocket(props) {
   const lackOfFunds = props.pocketBalance + props.amountForConversion < 0;
@@ -22,7 +22,7 @@ export default function Pocket(props) {
     <div className={`pocket-wrapper ${props.classNames}`}>
       <FormControl margin="normal" className="currencies-wrapper" >
         <Select
-          onChange={(e => props.onCurrencyChanged(e.target.value))}
+          onChange={e => props.onCurrencyChanged(e.target.value)}
           value={props.pocketCurrency}
           inputProps={{ name: "currencies" }}
           disableUnderline
@@ -36,7 +36,7 @@ export default function Pocket(props) {
           }
         </Select>
         <FormHelperText name="pocket-balance" error={lackOfFunds}>
-          Balance: {props.pocketBalance} {getSymbolForCurrency(props.pocketCurrency)}
+          Balance: {floorToPositionAfterDot(props.pocketBalance)} {getSymbolForCurrency(props.pocketCurrency)}
         </FormHelperText>
       </FormControl>
       <FormGroup row>
@@ -45,8 +45,8 @@ export default function Pocket(props) {
             name="amount-for-conversion"
             type="number"
             disableUnderline
-            value={Math.abs(props.amountForConversion)}
-            onChange={(e) => props.onAmountForConversionChanged(+e.target.value)}
+            value={floorToPositionAfterDot(Math.abs(props.amountForConversion))}
+            onChange={(e) => props.onAmountForConversionChanged(floorToPositionAfterDot(+e.target.value))}
           />
           <FormHelperText name="conversion-message" classes={{ label: "conversion-message"}}>
             {
