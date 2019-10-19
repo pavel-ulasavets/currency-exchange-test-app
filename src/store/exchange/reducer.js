@@ -2,9 +2,10 @@ import { ActionTypes } from './constants';
 
 const initialState = {
   requestAmount: 200,
-  exchangeRate: 0.2,
   sourceCurrency: 'USD',
-  targetCurrency: 'EUR'
+  targetCurrency: 'EUR',
+  exchangeRates: {},
+  exchangeRatesPollerId: null
 };
 
 function exchangeReducer(state = initialState, action) { // eslint-disable-line
@@ -32,6 +33,12 @@ function exchangeReducer(state = initialState, action) { // eslint-disable-line
         ...state,
         targetCurrency: action.payload.targetCurrency,
         sourceCurrency: action.payload.sourceCurrency
+      };
+
+    case ActionTypes.UPDATE_EXCHANGE_RATES:
+      return {
+        ...state,
+        exchangeRates: action.payload
       };
 
     default:

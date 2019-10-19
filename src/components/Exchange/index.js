@@ -1,5 +1,5 @@
 // global
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Icon from '@material-ui/icons/SwapVerticalCircleRounded';
@@ -15,14 +15,18 @@ import {
 } from 'store/user/selectors';
 import {
   getPocketsEngagedInExchange,
-  getExchangeDetails
+  getTargetAmount,
+  getExchangeRate,
+  getExchangeRatesPollerId
 } from 'store/exchange/selectors';
 // actions
 import {
   setSourceCurrency,
   setTargetCurrency,
   setAmountForExchange,
-  setCurrencies
+  setCurrencies,
+  startPollingExchangeRates,
+  stopPollingExchangeRates
 } from 'store/exchange/actions';
 
 import {
@@ -34,6 +38,14 @@ import Pocket from './components/Pocket';
 
 export function Exchange(props) {
   const lackOfFunds = props.fromPocket.balance < props.requestAmount;
+
+  useEffect(() => {
+    props.startPollingExchangeRates();
+
+    return () => {
+      props.stopPollingExchangeRates();
+    }
+  }, [props.pollerId]);
 
   return (
     <div className="exchange-container">
@@ -88,12 +100,15 @@ Exchange.propTypes = {
   requestAmount: PropTypes.number,
   targetAmount: PropTypes.number,
   exchangeRate: PropTypes.number,
+  pollerId: PropTypes.number,
   // methods
   onSourceCurrencyChanged: PropTypes.func.isRequired,
   onTargetCurrencyChanged: PropTypes.func.isRequired,
   onRequestAmountChanged: PropTypes.func.isRequired,
   onSwapClicked: PropTypes.func.isRequired,
-  onExchangeClicked: PropTypes.func.isRequired
+  onExchangeClicked: PropTypes.func.isRequired,
+  startPollingExchangeRates: PropTypes.func.isRequired,
+  stopPollingExchangeRates: PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = {
@@ -101,14 +116,18 @@ const mapDispatchToProps = {
   onTargetCurrencyChanged: setTargetCurrency,
   onRequestAmountChanged: setAmountForExchange,
   onSwapClicked: setCurrencies,
-  onExchangeClicked: makeTransfer
+  onExchangeClicked: makeTransfer,
+  startPollingExchangeRates,
+  stopPollingExchangeRates,
 };
 
 const mapStateToProps = (state) => ({
   userName: getActiveUserName(state),
   currencies: getPocketsCurrencies(state),
+  exchangeRate: getExchangeRate(state),
+  pollerId: getExchangeRatesPollerId(state),
   ...getPocketsEngagedInExchange(state),
-  ...getExchangeDetails(state)
+  ...getTargetAmount(state)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Exchange)

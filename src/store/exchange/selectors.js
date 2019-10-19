@@ -18,14 +18,32 @@ export const getPocketsEngagedInExchange = createSelector(
   }
 );
 
-export const getExchangeDetails = createSelector(
-  (state) => state.exchange.exchangeRate,
+export const getExchangeRate = createSelector(
+  (state) => state.exchange.sourceCurrency,
+  (state) => state.exchange.targetCurrency,
+  (state) => state.exchange.exchangeRates,
+  (sourceCurrency, targetCurrency, exchangeRates) => {
+    const haveValuesForBoth = !!exchangeRates[sourceCurrency] && !!exchangeRates[targetCurrency];
+
+    if (!haveValuesForBoth) {
+      return;
+    }
+
+    return exchangeRates[sourceCurrency] / exchangeRates[targetCurrency];
+  }
+);
+
+export const getTargetAmount = createSelector(
+  getExchangeRate,
   (state) => state.exchange.requestAmount,
   (exchangeRate, requestAmount) => {
     return {
-      exchangeRate,
       requestAmount,
       targetAmount: requestAmount * exchangeRate
     }
   }
 );
+
+export const getExchangeRatesPollerId = (state) => {
+  return state.exchange.exchangeRatesPollerId;
+}
