@@ -13,3 +13,7 @@
 .amount-for-conversion-wrapper .MuiInputBase-input {
   text-align: right;
 }
+
+.grayedout .MuiInputBase-input {
+  color: gray;
+}

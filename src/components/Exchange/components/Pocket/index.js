@@ -44,6 +44,7 @@ export default function Pocket(props) {
           <Input
             name="amount-for-conversion"
             type="number"
+            className={props.amountForConversion === 0 ? "grayedout" : ""}
             disableUnderline
             value={floorToPositionAfterDot(Math.abs(props.amountForConversion)).toString()}
             onChange={(e) => props.onAmountForConversionChanged(floorToPositionAfterDot(+e.target.value))}

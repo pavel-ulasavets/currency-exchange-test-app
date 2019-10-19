@@ -42,6 +42,7 @@ import { floorToPositionAfterDot } from 'utils';
 
 export function Exchange(props) {
   const lackOfFunds = props.fromPocket.balance < props.requestAmount;
+  const noInputYet = props.requestAmount === 0 && props.targetAmount === 0;
 
   useEffect(() => {
     props.startPollingExchangeRates();
@@ -85,7 +86,7 @@ export function Exchange(props) {
       <div className="submit-button-row">
         <Button
           variant="contained"
-          disabled={lackOfFunds}
+          disabled={lackOfFunds || noInputYet}
           color="secondary"
           onClick={() => props.onExchangeClicked({
             sourceCurrency: props.fromPocket.currency,
