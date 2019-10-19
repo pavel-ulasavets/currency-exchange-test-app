@@ -1,7 +1,7 @@
 import { ActionTypes } from './constants';
 
 const initialState = {
-  requestAmount: 200,
+  requestAmount: 0,
   sourceCurrency: 'USD',
   targetCurrency: 'EUR',
   exchangeRates: {},

@@ -1,4 +1,26 @@
-import { createPutMoneyAction, createWithdrawMoneyAction } from './actionCreators';
+import {
+  createPutMoneyAction,
+  createWithdrawMoneyAction,
+  createSetActiveUserInfo
+} from './actionCreators';
+
+import { fetchUserInfo } from './service';
+
+/**
+ * fetches a user info by a provided userId
+ *
+ * @param {String} userId
+ */
+export function fetchActiveUserInfo(userId) {
+  return (dispatch) => {
+    return fetchUserInfo(userId)
+      .then((userInfo) => dispatch(createSetActiveUserInfo(userInfo)))
+      .catch(() => {
+        console.error('Failed to fetch a user with userId=', userId);
+        // some retry logic may be implemented here
+      });
+  };
+}
 
 /**
  * makes a transfer from a pocket with sourceCurrency to a pocket with targetCurrency

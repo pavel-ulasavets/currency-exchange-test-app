@@ -16,6 +16,12 @@
       {
         "varsIgnorePattern": "React"
       }
+    ],
+    "react/prop-types": [
+      "error",
+      {
+        "ignore": ["children"]
+      }
     ]
   },
   "settings": {

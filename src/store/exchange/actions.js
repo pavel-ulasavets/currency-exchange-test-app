@@ -74,13 +74,6 @@ export function setAmountForExchange(amount) {
   };
 }
 
-export function setExchangeRate(rate) {
-  return {
-    type: ActionTypes.SET_EXCHANGE_RATE,
-    payload: rate
-  }
-}
-
 export function createSetExchangeRatesPollerIdAction(id) {
   return {
     type: ActionTypes.SET_EXCHANGE_RATE_POLLER_ID,

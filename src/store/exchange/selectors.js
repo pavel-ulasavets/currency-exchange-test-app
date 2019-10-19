@@ -29,18 +29,17 @@ export const getExchangeRate = createSelector(
       return;
     }
 
-    return exchangeRates[sourceCurrency] / exchangeRates[targetCurrency];
+    return exchangeRates[targetCurrency] / exchangeRates[sourceCurrency];
   }
 );
 
+export const getRequestAmount = (state) => state.exchange.requestAmount;
+
 export const getTargetAmount = createSelector(
   getExchangeRate,
-  (state) => state.exchange.requestAmount,
+  getRequestAmount,
   (exchangeRate, requestAmount) => {
-    return {
-      requestAmount,
-      targetAmount: requestAmount * exchangeRate
-    }
+    return requestAmount * exchangeRate;
   }
 );
 

@@ -16,6 +16,7 @@ import {
 import {
   getPocketsEngagedInExchange,
   getTargetAmount,
+  getRequestAmount,
   getExchangeRate,
   getExchangeRatesPollerId
 } from 'store/exchange/selectors';
@@ -59,9 +60,14 @@ export function Exchange(props) {
           onAmountForConversionChanged={props.onRequestAmountChanged}
         />
         <div className="buttons-row">
-          <IconButton onClick={() => props.onSwapClicked(props.toPocket.currency, props.fromPocket.currency)}>
-            <Icon />
-          </IconButton>
+          <Button variant="contained">
+            <IconButton onClick={() => props.onSwapClicked(props.toPocket.currency, props.fromPocket.currency)}>
+              <Icon />
+            </IconButton>
+            <span>
+              { `1 ${props.fromPocket.currency} = ${props.exchangeRate} ${props.toPocket.currency}`}
+            </span>
+          </Button>
         </div>
         <Pocket
           classNames='target-pocket'
@@ -127,7 +133,8 @@ const mapStateToProps = (state) => ({
   exchangeRate: getExchangeRate(state),
   pollerId: getExchangeRatesPollerId(state),
   ...getPocketsEngagedInExchange(state),
-  ...getTargetAmount(state)
+  targetAmount: getTargetAmount(state),
+  requestAmount: getRequestAmount(state)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Exchange)

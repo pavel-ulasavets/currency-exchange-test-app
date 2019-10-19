@@ -4,15 +4,22 @@
 
 .buttons-row {
   position: absolute;
-  top: calc(50% - 1.5em);
+  top: calc(50% - 2rem);
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .buttons-row .MuiSvgIcon-root {
-  font-size: 1.5em;
+  font-size: 1.5rem;
 }
 
 .buttons-row .MuiIconButton-root {
   color: rgba(0, 0, 0, 0.84);
+}
+
+.buttons-row .MuiButton-root {
+  border-radius: 2rem;
 }
 
 .pockets-container {

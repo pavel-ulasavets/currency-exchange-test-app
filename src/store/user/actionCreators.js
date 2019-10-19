@@ -1,6 +1,14 @@
 import { getActiveUserPockets } from './selectors';
 import { ActionTypes } from './constants';
 
+
+export function createSetActiveUserInfo(info) {
+  return {
+    type: ActionTypes.SET_ACTIVE_USER_INFO,
+    payload: info
+  };
+}
+
 /**
  * verifies validity of a specified transaction amount
  *

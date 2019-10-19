@@ -1,25 +1,20 @@
 import { ActionTypes } from "./constants";
 
 const initialState = {
-  username: "Pavel Ulasavets",
-  pockets: [
-    {
-      currency: "PLN",
-      balance: 20
-    },
-    {
-      currency: "EUR",
-      balance: 40
-    },
-    {
-      currency: "USD",
-      balance: 60
-    }
-  ]
+  isInitialized: false,
+  username: '',
+  pockets: []
 };
 
 function userReducer(state = initialState, { type, payload }) {
   switch (type) {
+    case ActionTypes.SET_ACTIVE_USER_INFO:
+      return {
+        ...state,
+        ...payload,
+        isInitialized: true,
+      };
+
     case ActionTypes.PUT_MONEY:
       return {
         ...state,

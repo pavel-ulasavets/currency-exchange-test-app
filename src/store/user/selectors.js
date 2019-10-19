@@ -7,6 +7,10 @@ export function getActiveUserName(state) {
   return state.user.username;
 }
 
+export function isActiveUserInitialized(state) {
+  return state.user.isInitialized;
+}
+
 /**
  * @enum {String} Currencies - USD, EUR, PLN
  */
