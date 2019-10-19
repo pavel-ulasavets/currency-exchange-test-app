@@ -27,7 +27,8 @@ import {
   setSourceCurrency,
   setTargetCurrency,
   setAmountForExchange,
-  setCurrencies,
+  setTargetAmountForExchange,
+  swapCurrencies,
   startPollingExchangeRates,
   stopPollingExchangeRates
 } from 'store/exchange/actions';
@@ -63,7 +64,7 @@ export function Exchange(props) {
         />
         <div className="buttons-row">
           <Button variant="contained">
-            <IconButton onClick={() => props.onSwapClicked(props.toPocket.currency, props.fromPocket.currency)}>
+            <IconButton onClick={() => props.onSwapClicked()}>
               <Icon />
             </IconButton>
             <span>
@@ -78,6 +79,7 @@ export function Exchange(props) {
           pocketCurrency={props.toPocket.currency}
           amountForConversion={props.targetAmount}
           onCurrencyChanged={props.onTargetCurrencyChanged}
+          onAmountForConversionChanged={props.onTargetAmountChanged}
         />
       </div>
       <div className="submit-button-row">
@@ -113,6 +115,7 @@ Exchange.propTypes = {
   onSourceCurrencyChanged: PropTypes.func.isRequired,
   onTargetCurrencyChanged: PropTypes.func.isRequired,
   onRequestAmountChanged: PropTypes.func.isRequired,
+  onTargetAmountChanged: PropTypes.func.isRequired,
   onSwapClicked: PropTypes.func.isRequired,
   onExchangeClicked: PropTypes.func.isRequired,
   startPollingExchangeRates: PropTypes.func.isRequired,
@@ -123,7 +126,8 @@ const mapDispatchToProps = {
   onSourceCurrencyChanged: setSourceCurrency,
   onTargetCurrencyChanged: setTargetCurrency,
   onRequestAmountChanged: setAmountForExchange,
-  onSwapClicked: setCurrencies,
+  onTargetAmountChanged: setTargetAmountForExchange,
+  onSwapClicked: swapCurrencies,
   onExchangeClicked: makeTransfer,
   startPollingExchangeRates,
   stopPollingExchangeRates,

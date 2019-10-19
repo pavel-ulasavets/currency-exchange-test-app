@@ -1,11 +1,11 @@
-import { store } from 'store';
 import {
-  getPocketsEngagedInExchange ,
-  getExchangeRatesPollerId
+  getPocketsEngagedInExchange,
+  getExchangeRatesPollerId,
 } from './selectors';
 import {
   fetchLatestExchangeRates
 } from './service';
+import * as ActionCreators from './actionCreators';
 
 import { ActionTypes } from './constants';
 
@@ -17,17 +17,20 @@ import { ActionTypes } from './constants';
  * @param {Currencies} sourceCurrency
  */
 export function setSourceCurrency(sourceCurrency) {
-  const { toPocket, fromPocket } = getPocketsEngagedInExchange(store.getState());
+  return (dispatch, getState) => {
+    const { toPocket, fromPocket } = getPocketsEngagedInExchange(getState());
 
-  if (toPocket.currency !== sourceCurrency) {
-    return {
-      type: ActionTypes.SET_SOURCE_CURRENCY,
-      payload: sourceCurrency
+    if (toPocket.currency !== sourceCurrency) {
+      return dispatch({
+        type: ActionTypes.SET_SOURCE_CURRENCY,
+        payload: sourceCurrency
+      });
     }
-  }
 
-  // keep currencies selectors in different states
-  return setCurrencies(sourceCurrency, fromPocket.currency)
+    // keep currencies selectors in different states
+    const action = ActionCreators.createSetCurrenciesAction(sourceCurrency, fromPocket.currency);
+    dispatch(action);
+  }
 }
 
 /**
@@ -38,54 +41,50 @@ export function setSourceCurrency(sourceCurrency) {
  * @param {Currencies} targetCurrency
  */
 export function setTargetCurrency(targetCurrency) {
-  const { toPocket, fromPocket } = getPocketsEngagedInExchange(store.getState());
+  return (dispatch, getState) => {
+    const { toPocket, fromPocket } = getPocketsEngagedInExchange(getState());
 
-  if (targetCurrency !== fromPocket.currency) {
-    return {
-      type: ActionTypes.SET_TARGET_CURRENCY,
-      payload: targetCurrency
+    if (targetCurrency !== fromPocket.currency) {
+      return dispatch({
+        type: ActionTypes.SET_TARGET_CURRENCY,
+        payload: targetCurrency
+      });
     }
-  }
 
-  // keep currencies selectors in different states
-  return setCurrencies(toPocket.currency, targetCurrency);
+    // keep currencies selectors in different states
+    const action = ActionCreators.createSetCurrenciesAction(toPocket.currency, targetCurrency);
+    return dispatch(action);
+  }
+}
+
+export function setCurrencies(sourceCurrency, targetCurrency) {
+  return ActionCreators.createSetCurrenciesAction(sourceCurrency, targetCurrency)
 }
 
 /**
- * resets exchanges currencies to ones specified
+ * sets a request amount to a specified value as well as updates a target amount value according
+ * to a currently available exchangeRate
  *
- * @param {Currencies} sourceCurrency
- * @param {Currencies} targetCurrency
+ * @param {Number} amount
  */
-export function setCurrencies(sourceCurrency, targetCurrency) {
-  return {
-    type: ActionTypes.SET_CURRENCIES,
-    payload: {
-      sourceCurrency,
-      targetCurrency
-    }
-  }
+export function setAmountForExchange(amount) {
+  return ActionCreators.createSetAmountForExchangeAction(amount);
 }
 
-export function setAmountForExchange(amount) {
+export function swapCurrencies() {
   return {
-    type: ActionTypes.SET_REQUEST_AMOUNT,
-    payload: amount
+    type: ActionTypes.SWAP_CURRENCIES
   };
 }
 
-export function createSetExchangeRatesPollerIdAction(id) {
-  return {
-    type: ActionTypes.SET_EXCHANGE_RATE_POLLER_ID,
-    payload: id
-  }
-}
-
-export function createUpdateExchangeRatesAction(exchangeRates) {
-  return {
-    type: ActionTypes.UPDATE_EXCHANGE_RATES,
-    payload: exchangeRates
-  }
+/**
+ * sets a target amount to a specified value as well as updates a requested amount value according
+ * to a currently available exchangeRate
+ *
+ * @param {Number} amount
+ */
+export function setTargetAmountForExchange(amount) {
+  return ActionCreators.createSetTargetAmountForExchangeAction(amount);
 }
 
 /**
@@ -105,7 +104,7 @@ export function startPollingExchangeRates(interval = 10000) {
 
     function fetch() {
       return fetchLatestExchangeRates()
-        .then(({ rates }) => dispatch(createUpdateExchangeRatesAction(rates)))
+        .then(({ rates }) => dispatch(ActionCreators.createUpdateExchangeRatesAction(rates)))
         .catch(() => {
           console.warn('Something went wrong while fetching exchange rates.. Will ret-try in', interval, 'ms')
         });
@@ -113,7 +112,7 @@ export function startPollingExchangeRates(interval = 10000) {
 
     fetch();
 
-    const action = createSetExchangeRatesPollerIdAction(setInterval(fetch, interval));
+    const action = ActionCreators.createSetExchangeRatesPollerIdAction(setInterval(fetch, interval));
     dispatch(action);
   };
 }
@@ -133,6 +132,6 @@ export function stopPollingExchangeRates() {
     }
 
     clearInterval(pollerId);
-    dispatch(createSetExchangeRatesPollerIdAction(null));
+    dispatch(ActionCreators.createSetExchangeRatesPollerIdAction(null));
   };
 }

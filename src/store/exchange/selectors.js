@@ -19,10 +19,11 @@ export const getPocketsEngagedInExchange = createSelector(
 );
 
 export const getExchangeRate = createSelector(
-  (state) => state.exchange.sourceCurrency,
-  (state) => state.exchange.targetCurrency,
+  getPocketsEngagedInExchange,
   (state) => state.exchange.exchangeRates,
-  (sourceCurrency, targetCurrency, exchangeRates) => {
+  ({ fromPocket, toPocket } , exchangeRates) => {
+    const sourceCurrency = fromPocket && fromPocket.currency;
+    const targetCurrency = toPocket && toPocket.currency;
     const haveValuesForBoth = !!exchangeRates[sourceCurrency] && !!exchangeRates[targetCurrency];
 
     if (!haveValuesForBoth) {
@@ -34,14 +35,7 @@ export const getExchangeRate = createSelector(
 );
 
 export const getRequestAmount = (state) => state.exchange.requestAmount;
-
-export const getTargetAmount = createSelector(
-  getExchangeRate,
-  getRequestAmount,
-  (exchangeRate, requestAmount) => {
-    return requestAmount * exchangeRate;
-  }
-);
+export const getTargetAmount = (state) => state.exchange.targetAmount;
 
 export const getExchangeRatesPollerId = (state) => {
   return state.exchange.exchangeRatesPollerId;
