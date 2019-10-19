@@ -37,7 +37,7 @@ describe('Pocket', () => {
 
       const input = mounted.find('input[name="amount-for-conversion"]');
       expect(input).toHaveLength(1);
-      expect(input.prop('value')).toBe(expectedAmountForConversion);
+      expect(input.prop('value')).toBe(expectedAmountForConversion.toString());
     });
 
     it('displays a pocket balance', () => {

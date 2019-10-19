@@ -45,10 +45,10 @@ export default function Pocket(props) {
             name="amount-for-conversion"
             type="number"
             disableUnderline
-            value={floorToPositionAfterDot(Math.abs(props.amountForConversion))}
+            value={floorToPositionAfterDot(Math.abs(props.amountForConversion)).toString()}
             onChange={(e) => props.onAmountForConversionChanged(floorToPositionAfterDot(+e.target.value))}
           />
-          <FormHelperText name="conversion-message" classes={{ label: "conversion-message"}}>
+          <FormHelperText name="conversion-message">
             {
               lackOfFunds ? 'Exceeds balance' : ''
             }

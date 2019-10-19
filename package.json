@@ -19,7 +19,8 @@
   "jest": {
     "verbose": true,
     "transform": {
-      "^.+.js?$": "babel-jest"
+      "^.+.js?$": "babel-jest",
+      "^.+.css": "<rootDir>/configs/testing/mocks/style.js"
     },
     "setupFilesAfterEnv": [
       "<rootDir>/configs/testing/setup.js"
