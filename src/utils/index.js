@@ -14,16 +14,16 @@
 export function getSymbolForCurrency(currency) {
   switch (currency) {
     case 'EUR':
-      return '€';
+      return String.fromCharCode(8364);
 
     case 'USD':
-      return '$';
+      return String.fromCharCode(36);
 
     case 'GBP':
-      return '£';
+      return String.fromCharCode(163);
 
     case 'PLN':
-      return 'zł';
+      return 'PLN';
 
     default:
       return '';
