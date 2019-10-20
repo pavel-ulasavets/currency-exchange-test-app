@@ -49,7 +49,7 @@ describe('Exchange', () => {
         />
       );
 
-      const rating = mounted.find('.exchange-rating');
+      const rating = mounted.find('label.exchange-rating');
       expect(rating).toHaveLength(1);
       const props = MOCKED_PROPS;
       const ratingInfo = `1 ${props.fromPocket.currency} = ${props.exchangeRate} ${props.toPocket.currency}`;

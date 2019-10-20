@@ -1,5 +1,5 @@
 {
-  "name": "revolut-test-app",
+  "name": "currency-exchange-widget",
   "version": "1.0.0",
   "description": "My webpack project",
   "main": "src/index.js",

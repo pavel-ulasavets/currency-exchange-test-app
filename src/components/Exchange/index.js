@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Icon from '@material-ui/icons/SwapVerticalCircleRounded';
-import { Button, Paper, IconButton } from '@material-ui/core';
+import { Button, FormLabel, Paper, IconButton } from '@material-ui/core';
 
 import "./exchange.css";
 
@@ -70,9 +70,9 @@ export function Exchange(props) {
                 <Icon />
               </IconButton>
             </React.Fragment>
-            <span className="exchange-rating">
+            <FormLabel className="exchange-rating">
               { `1 ${props.fromPocket.currency} = ${props.exchangeRate} ${props.toPocket.currency}`}
-            </span>
+            </FormLabel>
           </Paper>
         </div>
         <Pocket

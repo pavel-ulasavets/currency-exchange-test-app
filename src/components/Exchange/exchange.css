@@ -3,15 +3,14 @@
 }
 
 .buttons-row {
-  position: absolute;
-  top: calc(50% - 2rem);
-  width: 100%;
   display: flex;
   justify-content: center;
+  flex: 1;
+  background: linear-gradient(180deg, #FFFFFF 50%, #EFEFEF 50%);
 }
 
 .buttons-row .MuiSvgIcon-root {
-  font-size: 1.5rem;
+  font-size: 1.5em;
 }
 
 .buttons-row .MuiIconButton-root {
@@ -19,26 +18,55 @@
 }
 
 .buttons-row .MuiButton-root {
-  border-radius: 2rem;
+  border-radius: 2em;
 }
 
 .pockets-container {
-  position: relative;
+  flex: 6;
+  display: flex;
+  justify-content: stretch;
+  flex-direction: column;
+}
+
+.application-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  height: 100%;
+}
+
+.exchange-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  height: 60%;
 }
 
 .submit-button-row {
   background-color: #EFEFEF;
-    display: flex;
-    justify-content: center;
-    padding: 0 0 15px 0;
-    position: absolute;
-    width: 100%;
-    margin: -2.5rem 0;
+  display: flex;
+  justify-content: center;
+  padding: 0 0 15px 0;
+  flex: 0.75
 }
 
 .exchange-rating {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   vertical-align: middle;
-  font-size: 0.9rem;
-  margin: 0 1rem;
+  font-size: 0.9em;
+  margin: 0 1em;
+}
+
+@media screen and (min-width: 1280px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  html {
+    font-size: 12px;
+    min-width: 320px;
+    min-height: 320px;
+  }
 }
