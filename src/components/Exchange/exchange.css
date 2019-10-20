@@ -35,3 +35,10 @@
     width: 100%;
     margin: -2.5rem 0;
 }
+
+.exchange-rating {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  vertical-align: middle;
+  font-size: 0.9rem;
+  margin: 0 1rem;
+}

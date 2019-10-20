@@ -68,5 +68,55 @@ describe('Exchange', () => {
       expect(button).toHaveLength(1);
       expect(button.contains('Exchange')).toBe(true);
     });
+
+    it('disables "Exchange" button when both inputs contain zeros', () => {
+      const mounted = mount(
+        <Exchange
+          {...MOCKED_PROPS}
+          requestAmount={0}
+          targetAmount={0}
+        />
+      );
+
+      const button = mounted.find('button[name="exchange-button"]');
+      expect(button).toHaveLength(1);
+      expect(button.prop('disabled')).toBe(true);
+    });
+
+    it('disables "Exchange" button when user has insufficient funds to make a transfer', () => {
+      const mounted = mount(
+        <Exchange
+          {...MOCKED_PROPS}
+          requestAmount={500}
+          fromPocket={{
+            ...MOCKED_PROPS.fromPocket,
+            balance: 400
+          }}
+          targetAmount={0}
+        />
+      );
+
+      const button = mounted.find('button[name="exchange-button"]');
+      expect(button).toHaveLength(1);
+      expect(button.prop('disabled')).toBe(true);
+    });
+
+    it('displays "Exchange" button in normal color when user has funds to make a transfer', () => {
+      const mounted = mount(
+        <Exchange
+          {...MOCKED_PROPS}
+          requestAmount={200}
+          fromPocket={{
+            ...MOCKED_PROPS.fromPocket,
+            balance: 400
+          }}
+          targetAmount={0}
+        />
+      );
+
+      const button = mounted.find('button[name="exchange-button"]');
+      expect(button).toHaveLength(1);
+      expect(button.prop('disabled')).toBe(false);
+    });
   })
 });

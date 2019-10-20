@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Icon from '@material-ui/icons/SwapVerticalCircleRounded';
-import { Button, IconButton } from '@material-ui/core';
+import { Button, Paper, IconButton } from '@material-ui/core';
 
 import "./exchange.css";
 
@@ -64,7 +64,7 @@ export function Exchange(props) {
           onAmountForConversionChanged={(value) => props.onRequestAmountChanged(value * Math.sign(value))}
         />
         <div className="buttons-row">
-          <Button variant="contained">
+          <Paper variant="contained">
             <React.Fragment>
               <IconButton onClick={() => props.onSwapClicked()}>
                 <Icon />
@@ -73,7 +73,7 @@ export function Exchange(props) {
             <span className="exchange-rating">
               { `1 ${props.fromPocket.currency} = ${props.exchangeRate} ${props.toPocket.currency}`}
             </span>
-          </Button>
+          </Paper>
         </div>
         <Pocket
           classNames='target-pocket'

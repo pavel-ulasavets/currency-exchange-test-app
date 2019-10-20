@@ -12,8 +12,9 @@ import {
 import './pocket.css';
 
 // local
-import { getSymbolForCurrency } from 'utils';
+import * as Utils from 'utils';
 import EnhancedNumberField from './components/EnhancedNumberField';
+import { floorToPositionAfterDot } from "../../../../utils";
 
 export default function Pocket(props) {
   const insufficientFunds = props.pocketBalance + props.amountForConversion < 0;
@@ -36,7 +37,7 @@ export default function Pocket(props) {
           }
         </Select>
         <FormHelperText name="pocket-balance" error={insufficientFunds}>
-          Balance: {`${props.pocketBalance} ${getSymbolForCurrency(props.pocketCurrency)}`}
+          Balance: {`${floorToPositionAfterDot(props.pocketBalance)} ${Utils.getSymbolForCurrency(props.pocketCurrency)}`}
         </FormHelperText>
       </FormControl>
       <FormGroup row>
