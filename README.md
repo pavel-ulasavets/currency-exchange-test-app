@@ -12,7 +12,7 @@ for a fixed basket of currencies. For now these are
 
 At the moment an application does not allow to configure this list.
 
-![app screenshot]: (https://github.com/pavel-ulasavets/currency-exchange-test-app/blob/master/images/app_screenshot.png)
+![app screenshot]: (https://raw.githubusercontent.com/pavel-ulasavets/currency-exchange-test-app/master/images/app_screenshot.png)
 
 
 ## How to use
