@@ -7,8 +7,6 @@ import {
 } from './service';
 import * as ActionCreators from './actionCreators';
 
-import { ActionTypes } from './constants';
-
 /**
  * sets a source currency of exchange to one specified
  *
@@ -21,10 +19,8 @@ export function setSourceCurrency(sourceCurrency) {
     const { toPocket, fromPocket } = getPocketsEngagedInExchange(getState());
 
     if (toPocket.currency !== sourceCurrency) {
-      return dispatch({
-        type: ActionTypes.SET_SOURCE_CURRENCY,
-        payload: sourceCurrency
-      });
+      const action = ActionCreators.createSetSourceCurrencyAction(sourceCurrency);
+      return dispatch(action);
     }
 
     // keep currencies selectors in different states
@@ -45,10 +41,7 @@ export function setTargetCurrency(targetCurrency) {
     const { toPocket, fromPocket } = getPocketsEngagedInExchange(getState());
 
     if (targetCurrency !== fromPocket.currency) {
-      return dispatch({
-        type: ActionTypes.SET_TARGET_CURRENCY,
-        payload: targetCurrency
-      });
+      return ActionCreators.createSetTargetCurrencyAction(targetCurrency);
     }
 
     // keep currencies selectors in different states
@@ -72,9 +65,7 @@ export function setAmountForExchange(amount) {
 }
 
 export function swapCurrencies() {
-  return {
-    type: ActionTypes.SWAP_CURRENCIES
-  };
+  return ActionCreators.createSwapCurrenciesAction();
 }
 
 /**

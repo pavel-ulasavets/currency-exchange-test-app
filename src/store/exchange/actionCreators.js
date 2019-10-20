@@ -1,5 +1,20 @@
 import { ActionTypes } from './constants';
 
+
+export function createSetSourceCurrencyAction(sourceCurrency) {
+  return {
+    type: ActionTypes.SET_SOURCE_CURRENCY,
+    payload: sourceCurrency
+  };
+}
+
+export function createSetTargetCurrencyAction(sourceCurrency) {
+  return {
+    type: ActionTypes.SET_TARGET_CURRENCY,
+    payload: sourceCurrency
+  };
+}
+
 /**
  * resets exchanges currencies to ones specified
  *
@@ -42,4 +57,10 @@ export function createUpdateExchangeRatesAction(exchangeRates) {
     type: ActionTypes.UPDATE_EXCHANGE_RATES,
     payload: exchangeRates
   }
+}
+
+export function createSwapCurrenciesAction() {
+  return {
+    type: ActionTypes.SWAP_CURRENCIES
+  };
 }
