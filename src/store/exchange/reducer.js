@@ -9,6 +9,10 @@ const initialState = {
   exchangeRatesPollerId: null
 };
 
+function roundToHundredths(number) {
+  return Math.round(number * 100) / 100;
+}
+
 function exchangeReducer(state = initialState, action) { // eslint-disable-line
   switch(action.type) {
 
@@ -18,7 +22,7 @@ function exchangeReducer(state = initialState, action) { // eslint-disable-line
       return {
         ...state,
         sourceCurrency: action.payload,
-        targetAmount: state.requestAmount * exchangeRate
+        targetAmount: roundToHundredths(state.requestAmount * exchangeRate)
       };
     }
 
@@ -29,7 +33,7 @@ function exchangeReducer(state = initialState, action) { // eslint-disable-line
       return {
         ...state,
         targetCurrency,
-        targetAmount: state.requestAmount * exchangeRate
+        targetAmount: roundToHundredths(state.requestAmount * exchangeRate)
       };
     }
 
@@ -42,7 +46,7 @@ function exchangeReducer(state = initialState, action) { // eslint-disable-line
         ...state,
         targetCurrency: action.payload.targetCurrency,
         sourceCurrency: action.payload.sourceCurrency,
-        targetAmount: state.requestAmount * exchangeRate
+        targetAmount: roundToHundredths(state.requestAmount * exchangeRate)
       };
     }
 
@@ -62,7 +66,7 @@ function exchangeReducer(state = initialState, action) { // eslint-disable-line
       return {
         ...state,
         requestAmount: action.payload,
-        targetAmount: action.payload * exchangeRate
+        targetAmount: roundToHundredths(action.payload * exchangeRate)
       };
     }
 
@@ -71,7 +75,7 @@ function exchangeReducer(state = initialState, action) { // eslint-disable-line
 
       return {
         ...state,
-        requestAmount: exchangeRate * action.payload,
+        requestAmount: roundToHundredths(exchangeRate * action.payload),
         targetAmount: action.payload
       };
     }

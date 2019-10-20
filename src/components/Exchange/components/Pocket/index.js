@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import {
   MenuItem,
   Select,
-  Input,
   FormControl,
   FormHelperText,
   FormGroup
@@ -13,10 +12,11 @@ import {
 import './pocket.css';
 
 // local
-import { getSymbolForCurrency, floorToPositionAfterDot } from 'utils';
+import { getSymbolForCurrency } from 'utils';
+import EnhancedNumberField from './components/EnhancedNumberField';
 
 export default function Pocket(props) {
-  const lackOfFunds = props.pocketBalance + props.amountForConversion < 0;
+  const insufficientFunds = props.pocketBalance + props.amountForConversion < 0;
 
   return (
     <div className={`pocket-wrapper ${props.classNames}`}>
@@ -35,23 +35,21 @@ export default function Pocket(props) {
             ))
           }
         </Select>
-        <FormHelperText name="pocket-balance" error={lackOfFunds}>
-          Balance: {floorToPositionAfterDot(props.pocketBalance)} {getSymbolForCurrency(props.pocketCurrency)}
+        <FormHelperText name="pocket-balance" error={insufficientFunds}>
+          Balance: {`${props.pocketBalance} ${getSymbolForCurrency(props.pocketCurrency)}`}
         </FormHelperText>
       </FormControl>
       <FormGroup row>
         <FormControl margin="normal" className="amount-for-conversion-wrapper">
-          <Input
+          <EnhancedNumberField
             name="amount-for-conversion"
-            type="number"
-            className={props.amountForConversion === 0 ? "grayedout" : ""}
-            disableUnderline
-            value={floorToPositionAfterDot(Math.abs(props.amountForConversion)).toString()}
-            onChange={(e) => props.onAmountForConversionChanged(floorToPositionAfterDot(+e.target.value))}
+            grayedout={props.amountForConversion === 0 || insufficientFunds}
+            value={props.amountForConversion}
+            onChange={value => props.onAmountForConversionChanged(value)}
           />
           <FormHelperText name="conversion-message">
             {
-              lackOfFunds ? 'Exceeds balance' : ''
+              insufficientFunds ? 'Exceeds balance' : ''
             }
           </FormHelperText>
       </FormControl>

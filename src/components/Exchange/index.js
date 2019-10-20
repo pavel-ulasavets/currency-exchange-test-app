@@ -61,13 +61,15 @@ export function Exchange(props) {
           pocketCurrency={props.fromPocket.currency}
           amountForConversion={-props.requestAmount}
           onCurrencyChanged={props.onSourceCurrencyChanged}
-          onAmountForConversionChanged={props.onRequestAmountChanged}
+          onAmountForConversionChanged={(value) => props.onRequestAmountChanged(value * Math.sign(value))}
         />
         <div className="buttons-row">
           <Button variant="contained">
-            <IconButton onClick={() => props.onSwapClicked()}>
-              <Icon />
-            </IconButton>
+            <React.Fragment>
+              <IconButton onClick={() => props.onSwapClicked()}>
+                <Icon />
+              </IconButton>
+            </React.Fragment>
             <span>
               { `1 ${props.fromPocket.currency} = ${props.exchangeRate} ${props.toPocket.currency}`}
             </span>
