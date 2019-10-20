@@ -70,7 +70,7 @@ export function Exchange(props) {
                 <Icon />
               </IconButton>
             </React.Fragment>
-            <span>
+            <span className="exchange-rating">
               { `1 ${props.fromPocket.currency} = ${props.exchangeRate} ${props.toPocket.currency}`}
             </span>
           </Button>
@@ -87,6 +87,7 @@ export function Exchange(props) {
       </div>
       <div className="submit-button-row">
         <Button
+          name="exchange-button"
           variant="contained"
           disabled={lackOfFunds || noInputYet}
           color="secondary"
